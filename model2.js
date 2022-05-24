@@ -5,7 +5,7 @@ class Todo{
         high: {order:2, name:'alta', color:'orange'},
         veryHigh: {order:3, name:'molto Alta', color:'red'}
     }
-    constructor(name, tags = [], creationDate = new Date(), priority = todosArray.PRIORITY.low){
+    constructor(name, tags = [], creationDate = new Date(), priority = Todo.PRIORITY.low){
         this.name = name;
         this.tags = tags;
         this._creationDate = creationDate.getTime();
@@ -13,7 +13,7 @@ class Todo{
     }
     
     get creationDate(){
-        return new Date(this_creationDate);
+        return new Date(this._creationDate);
     }
 
     set creationDate(date){
@@ -21,13 +21,13 @@ class Todo{
     }
     
     static fromDbObj(obj){
-        const todo = new Todo(obj.name, obj.tags, new Date(obj.creationDate*1000))
+        const todo = new Todo(obj.name, obj.tags, new Date(obj.creationDate*1000));
         todo.id = obj.id;
         if(obj.priority === 1){
             todo.priority = Todo.PRIORITY.medium;
-        }else if(obj.priority ===2){
+        }else if(obj.priority === 2){
             todo.priority = Todo.PRIORITY.high;
-        }else if(obj.priority ===3){
+        }else if(obj.priority === 3){
             todo.priority = Todo.PRIORITY.veryHigh;
         }
         return todo;

@@ -1,14 +1,17 @@
 
 //3)
 
-const BASE_URL = 'https://62860d1bf0e8f0bb7c0f42a9.mockapi.io/todos'
+//const BASE_URL = 'https://62860d1bf0e8f0bb7c0f42a9.mockapi.io/todos'
+const BASE_URL =  'https://62877c5ae9494df61b3a03c2.mockapi.io/todos'
+
+
 
 
 //4)
 let todosArray = [];
 
 function goToTodoPage(){
-    window.location.href = "/todo.html/"
+    window.location.href = "/todo.html";
 }
 
 function populateTagContainer(container, tags){
@@ -28,14 +31,14 @@ function createTodoCard(todo){
     <div class="tag-container"></div>
     <span>#CREATIONDATE</span>
     <div class="divider"></div>
-    <div  class="button-container">
-        <button class="delete-button"><img width="20px" src="./assets/delete_FILL0_wght400_GRAD0_opsz48.png"></button>
-        <button class="edit-button"><img width="20px" src="./assets/edit_FILL0_wght400_GRAD0_opsz48.png"></button>
-        <button class="done-button"><img width="20px" src="./assets/add_FILL0_wght400_GRAD0_opsz48.png"></button>
+    <div class="button-container">
+        <button class="delete-button"><img width="23px" src="./assets/./delete-button.png"></button>
+        <button class="edit-button"><img width="23px" src="./assets/./edit.png"></button>
+        <button class="done-button"><img width="23px" src="./assets/./add.png"></button>
     </div>`
     
-    // const humanDate = new Date(todo.cretionDate * 1000)
 
+    // const humanDate = new Date(todo.cretionDate * 1000)
     const todoHtml = cardTemplate.replace("#NAME", todo.name)
                                  .replace("#CREATIONDATE", todo.creationDate)
     return todoHtml;
@@ -86,11 +89,16 @@ function displayTodos(todos){
 
     //console.log
     todosContainer.innerHTML = '';
+    const sortedTodo = todos.sort(function(a, b){
+        if(a.priority.order > b.priority.order) { return -1; }
+        if(a.priority.order < b.priority.order ) { return 1; }
+        return 0;
+    })
 
-    for (const todo of todos) {
+    for (const todo of sortedTodo) {
 
         const todoCard = document.createElement('div');
-        todoCard.classList.id('todo-card');
+        todoCard.classList.add('todo-card');
 
         todoCard.innerHTML = createTodoCard(todo);
 
@@ -99,9 +107,13 @@ function displayTodos(todos){
         populateTagContainer(tagContainer, todo.tags);
 
         const deleteButton = todoCard.querySelector('.delete-button');
-        deleteButton.onclick = () => deleteTodo(todo.id);
-
-        const divider = todo.querySelector('.divider');
+        deleteButton.onclick= () => {
+            const confirmText = prompt('Scrivi "elimina" per confermare');
+            if(confirmText ==="elimina"){
+                deleteTodo(todo.id);
+            }
+        }
+        const divider = todoCard.querySelector('.divider');
         divider.style.backgroundColor = todo.priority.color;
 
         // const span = document.createElement('span');
@@ -126,8 +138,8 @@ function displayTodos(todos){
 //4)
 function initTodos(todos){
     stoptLoading();
-    console.log('init',todos)
-    todosArray = todos;
+    // console.log('init',todos)
+    todosArray = todos.map(obj => Todo.fromDbObj(obj));
     displayTodos(todosArray);
 }
 
