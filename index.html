@@ -4,11 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TodoApp</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>ToDoApp</title>
+    <link rel="stylesheet" href="./style2.css">
 </head>
 <body>
+    <header class="nav-bar">
+        <strong class="app-title">ToDo App</strong>
+        <img id="loader" style="display: none"; src="./assets/344-loader-15.png" width="30px" alt="">
+        <button id="refresh-button" onclick="loadTodos()"><img src="./assets/refresh_FILL0_wght400_GRAD0_opsz48.png" width="30px"></button>
+    </header>
+    <div id="todos-container" class=" todos-container">
+     <div class="todo-card">
     
+     </div>   
+    </div>
+    <button onclick= "goToTodoPage()" class="add-button">
+        <img src="./assets/add_FILL0_wght400_GRAD0_opsz48.png" width="40px">
+    </button>
+
+    <!-- <nav class="nav-bar">
+        <h1>Todo App</h1>
+    </nav>
+    
+    <div id="card-container">
+
+    </div>
+
+    <button id="add-card" >
+
+    </button> -->
+
 </body>
-<script src="./app.js"></script>
+<!-- <script src="./model2.js"></script> -->
+<script src="./model2.js"></script>
+<script src="./app2.js"></script>
 </html>

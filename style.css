@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,500;0,600;0,700;1,300&display=swap');
+
+
+html,
+body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.nav-bar {
+    position: fixed;
+    top: 0px;
+    /* border-radius: 0px 0px 8px 8px; */
+    width: 100%;
+    background-color: rgb(50, 97, 183);
+    color: whitesmoke;
+    padding-left: 16px;
+}
+
+#card-container {
+    padding-top: 80px;
+    background-image: url(./assets/tile_background.png);
+    height: 100%;
+    overflow: auto;
+}
+
+.card {
+    border-radius: 16px;
+    margin: 16px;
+    padding: 8px;
+    box-shadow: -11px 2px 14px -5px rgba(0, 0, 0, 0.82);
+    -webkit-box-shadow: -11px 9px 14px -5px rgba(0, 0, 0, 0.82);
+    -moz-box-shadow: -11px 9px 14px -5px rgba(0, 0, 0, 0.82);    
+}
+
+.card p{
+    width: fit-content;
+    text-transform: uppercase;
+}
+
+.tags{
+    display: inline-block;
+    margin: 8px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.377);
+    color: white;
+    border-radius: 16px;
+}
+
+.trash-btn{
+    background-image: url(./assets/trash-can-solid.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    
+}
+
+.done-btn{
+    float: right;
+    margin-right: 32px;
+    background-image: url(./assets/circle-check-solid.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+#add-card{
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background-image: url(./assets/circle-plus-solid.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    
+}
+
+.div-sep{
+    height: 2px;
+    margin-bottom: 8px;
+}
+
+.tags:hover{
+    background-color: rgba(8, 3, 3, 0.537);
+}
+
+@media screen and (min-width: 500px) {
+    #card-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card{
+        height: fit-content;
+    }
+    
+}
