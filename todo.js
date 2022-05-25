@@ -18,6 +18,7 @@
 //         return null;
 //     }
 // }
+const BASE_URL = 'https://62860d1bf0e8f0bb7c0f42a9.mockapi.io/todos'
 
 function parseUrlParams(){
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -25,8 +26,30 @@ function parseUrlParams(){
     return params
 }
 
+
+
+function getTodo(id){
+    const getUrl = BASE_URL + '/' + id;
+    const fetchOptions = { method: 'get'};
+    fetch(getUrl, fetchOptions)
+    .then(response => response.json())
+    .then(result => editTodo(result))               
+    .catch(error => console.log(error))
+}
+
+function editTodo(todo){
+    document.getElementById("todo-name").value = todo.name
+    document.getElementsByClassName("priority").
+    console.log(todo)
+}
+
 const params = parseUrlParams();
 console.log(params);
+
+getTodo(params.id)
+
+
+
 
 // function getTodoFromSessionStorage(){
 //     const todoString = sessionStorage.getItem('selectedTodo');

@@ -95,6 +95,21 @@ function deleteTodo(id){
     //console.log('delete', id) log per vedere se funziona
 }
 
+function getTodo(id){
+    startLoading();
+    const getUrl = BASE_URL + '/' + id;
+    const fetchOptions = { method: 'get'};
+    fetch(getUrl, fetchOptions)
+    .then(response => response.json())
+    .then(result => removeTodoAndRefesh(result))
+                   
+    .catch(error = stoptLoading())
+}
+
+function editTodo(todo){
+    console.log(todo)
+}
+
 //2)
 function displayTodos(todos){
     const todosContainer = document.getElementById('todos-container') 
