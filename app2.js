@@ -1,18 +1,30 @@
 
 //3)
 
-//const BASE_URL = 'https://62860d1bf0e8f0bb7c0f42a9.mockapi.io/todos'
-const BASE_URL =  'https://62877c5ae9494df61b3a03c2.mockapi.io/todos'
-
-
+const BASE_URL = 'https://62860d1bf0e8f0bb7c0f42a9.mockapi.io/todos'
+//const BASE_URL =  'https://62877c5ae9494df61b3a03c2.mockapi.io/todos'
 
 
 //4)
 let todosArray = [];
 
-function goToTodoPage(){
-    window.location.href = "/todo.html";
+function goToTodoPage(id){
+    let urlString = "/todo.html"
+    if(id){
+        urlString = urlString + '?id=' + id;
+    }
+    window.location.href = urlString ;
 }
+
+// function goToTodoPage2(todo){
+//     let urlString = "/todo.html"
+//     if(todo){
+//         const todoString = JSON.stringify(todo); 
+//        sessionStorage.setItem('selectedTodo', todoString);
+//     }
+//     window.location.href = urlString ;
+// }
+
 
 function populateTagContainer(container, tags){
     for (const tag of tags) {
@@ -107,12 +119,16 @@ function displayTodos(todos){
         populateTagContainer(tagContainer, todo.tags);
 
         const deleteButton = todoCard.querySelector('.delete-button');
-        deleteButton.onclick= () => {
+        deleteButton.onclick = () => {
             const confirmText = prompt('Scrivi "elimina" per confermare');
-            if(confirmText ==="elimina"){
+            if(confirmText === "elimina"){
                 deleteTodo(todo.id);
             }
         }
+
+        const editButton = todoCard.querySelector('.edit-button');
+        editButton.onclick = () => goToTodoPage(todo.id);
+
         const divider = todoCard.querySelector('.divider');
         divider.style.backgroundColor = todo.priority.color;
 
@@ -155,3 +171,6 @@ function loadTodos(){
 }
 
 loadTodos();
+
+
+

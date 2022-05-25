@@ -33,3 +33,9 @@ class Todo{
         return todo;
     }
 }
+
+//sort in classe
+
+// function sortTodoPriority(t1, t2){
+//     return t2.priority.order - t1.priority.order;
+// } cambio sul ArrayTodo per il sortTodoPriority
