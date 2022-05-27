@@ -110,12 +110,33 @@ function editTodo(todo){
     console.log(todo)
 }
 
+function todoDone(todo){
+    todo.doneDate = new Date().getTime() / 1000;
+    todo.priority = Todo.PRIORITY.done;
+    const dbObj = todo.toDbObj();
+    const dbObjJson = JSON.stringify(dbObj);
+  
+    const url = BASE_URL + '/' + todo.id;
+  
+    fetchOptions = {
+      method: 'PUT', body: dbObjJson, headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+  
+    fetch(url, fetchOptions)
+    .then(resp => resp.json())
+    .then(res => displayTodos(todosArray))
+  
+  }
+  
+
 //2)
 function displayTodos(todos){
     const todosContainer = document.getElementById('todos-container') 
 
-    //console.log
     todosContainer.innerHTML = '';
+
     const sortedTodo = todos.sort(function(a, b){
         if(a.priority.order > b.priority.order) { return -1; }
         if(a.priority.order < b.priority.order ) { return 1; }
@@ -142,7 +163,23 @@ function displayTodos(todos){
         }
 
         const editButton = todoCard.querySelector('.edit-button');
-        editButton.onclick = () => goToTodoPage(todo.id);
+        if (todo.doneDate) {
+      editButton.style.display = 'none';
+        } else {
+      editButton.onclick = () => goToTodoPage(todo.id);
+        }
+    
+
+        
+        const doneButton = todoCard.querySelector('.done-button');
+        if (todo.doneDate) {
+         doneButton.style.display = 'none';
+        } else {
+         doneButton.onclick = () => todoDone(todo);
+        }
+    
+
+        // const doneButton2 =  todoCard.getElementsByClassName('done-button');
 
         const divider = todoCard.querySelector('.divider');
         divider.style.backgroundColor = todo.priority.color;
@@ -160,6 +197,8 @@ function displayTodos(todos){
         // button.appendChild(deleteNode);
 
         // todoCard.appendChild(button);
+        editButton.onclick = () => goToTodoPage(todo.id);
+
 
         todosContainer.appendChild(todoCard);
 

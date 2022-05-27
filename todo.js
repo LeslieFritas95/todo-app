@@ -21,37 +21,42 @@
 const BASE_URL = 'https://62860d1bf0e8f0bb7c0f42a9.mockapi.io/todos';
 
 
-let selectedTodo;
+let selectedTodo = new Todo('new Todo');
 
+const params = parseUrlParams();
+
+function todoApp(){
+    window.location.href = './'
+}
 
 function goHome() {
     window.location.href = './'
-  }
+}
   
   function parseUrlParams() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     return params;
     //console.log('params', params);
-  }
+}
   
   function changeTitle() {
     const pageTitle = document.getElementById('page-title');
     pageTitle.innerHTML = 'Modifica Todo'
-  }
+}
   
   function loadSelectedTodo(id) {
     const todoUrl = BASE_URL + '/' + id;
     fetch(todoUrl)
     .then(resp => resp.json())
     .then(result => initiSelectedTodo(result));
-  }
+}
   
   function initiSelectedTodo(obj){
     const todo = Todo.fromDbObj(obj);
     selectedTodo = todo;
     fillForm(selectedTodo);
-  }
+}
   
   function colorTags(selectedTags){
     const tags = document.getElementsByClassName('tag');
@@ -62,7 +67,7 @@ function goHome() {
         tagSpan.style.backgroundColor = '#414141';
       }
     }
-  }
+}
   
   function colorPriority(priority){
     const priorities = document.getElementsByClassName('priority');
@@ -73,7 +78,7 @@ function goHome() {
         prioritySpan.style.backgroundColor = '#414141'
       }
     }
-  }
+}
   
   function addOrRemoveTag(tag){
     if (selectedTodo.tags.includes(tag)) {
@@ -82,65 +87,68 @@ function goHome() {
       selectedTodo.tags.push(tag);
     }
     colorTags(selectedTodo.tags);
-  }
+}
   
   function changePriority(priority) {
     selectedTodo.priorityOrder = priority;
     colorPriority(selectedTodo.priority);
-  }
+}
   
   function filterTags(t1, t2){
     return t1 !== t2;
-  }
+}
   
   function fillForm(todo){
     const nameInput = document.getElementById('name-input');
     nameInput.value = todo.name;
     colorTags(todo.tags);
     colorPriority(todo.priority);
-  }
+}
 
-  function saveTodo(){
-      const nameInput = document.getElementById('name-input')
-      const name = nameInput.value.trim();
-
-      if(name){
-        selectedTodo.name = name;
-        const dbObj = selectedTodo.toDbObj();
-        const dbObjJson = JSON.stringify(dbObj);
-        let url;
-        let fetchOptions;
-
-        if(params.id){
-            const url = BASE_URL + '/' + params.id;
-            fetchOptions = {method: 'PUT', body: dbObjJson, headers:{
-                'Content-type' : 'application/json'
-            }
-        }
-    }
-
-    fetch(url, fetchOptions)
-    .then(resp => resp.json())
-    .then(res => goHome())
-    }else{
-        alert('non posso salvare un Todo senza nome')
+function saveTodo(){
+    const nameInput = document.getElementById('name-input');
+    const name = nameInput.value.trim();
+  
+    if (name) {
+      selectedTodo.name = name;
+      const dbObj = selectedTodo.toDbObj();
+      const dbObjJson = JSON.stringify(dbObj);
+      let url;
+      let fetchOptions;
+      if (params.id) {
+        url = BASE_URL + '/' + params.id;
+        fetchOptions = {
+          method: 'PUT', body: dbObjJson, headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+      } else {
+        url = BASE_URL;
+        fetchOptions = {
+          method: 'post', body: dbObjJson, headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+      }
+      fetch(url, fetchOptions)
+        .then(resp => resp.json())
+        .then(res => goHome())
+    } else {
+      alert('non posso savare un todo senza nome')
     }
   }
   
   
-  const params = parseUrlParams();
-
+  
   if (params.id) {
     changeTitle()
     loadSelectedTodo(params.id)
-  }else{
-    fillForm()
+  } else {
+    fillForm(selectedTodo);
   }
   
   
-
-
-
+  
 // function getTodo(id){
 //     const getUrl = BASE_URL + '/' + id;
 //     const fetchOptions = { method: 'get'};
