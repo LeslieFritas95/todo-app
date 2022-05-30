@@ -134,7 +134,7 @@ function saveTodo(){
         .then(resp => resp.json())
         .then(res => goHome())
     } else {
-      alert('non posso savare un todo senza nome')
+      alert('non posso salvare un todo senza nome')
     }
   }
   
